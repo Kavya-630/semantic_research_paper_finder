@@ -3,12 +3,14 @@ import json
 import pandas as pd
 
 # Load dataset (replace with your dataset file)
-@st.cache_data
-def load_data():
-    file_path = r"C:\Users\Navya sree\Downloads\arxiv-metadata-oai-snapshot.json"  # raw string for Windows
-    with open(file_path, "r", encoding="utf-8") as f:
+@st.cache_data(hash_funcs={str: lambda _: None})
+def load_data(path: str):
+    with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
     return pd.DataFrame(data)
+
+df = load_data(r"C:\Users\Navya sree\Downloads\arxiv-metadata-oai-snapshot.json")
+
 
 
 # Simple search function
