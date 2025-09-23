@@ -6,7 +6,7 @@ import numpy as np
 
 @st.cache_data
 def load_data(csv_path):
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv("arxiv_sample.csv")
     return df
 
 @st.cache_resource
