@@ -24,3 +24,7 @@ This app is based on the arXiv metadata dataset.
 Full dataset: https://www.kaggle.com/datasets/Cornell-University/arxiv
 
 A small sample dataset is included for quick testing.
+
+## Example usage in Streamlit 
+
+https://semanticresearchpaperfinder-gptrbdav79omsyshc6p7im.streamlit.app/
