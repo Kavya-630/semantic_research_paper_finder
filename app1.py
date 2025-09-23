@@ -3,13 +3,16 @@ import json
 import pandas as pd
 
 # Load dataset (replace with your dataset file)
-@st.cache_data(hash_funcs={str: lambda _: None})
-def load_data(path: str):
-    with open(path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    return pd.DataFrame(data)
+import pandas as pd
 
-df = load_data(r"C:\Users\Navya sree\Downloads\arxiv-metadata-oai-snapshot.json")
+@st.cache_data
+def load_data():
+    # Load the smaller sample CSV that is inside your GitHub repo
+    df = pd.read_csv("arxiv_sample.csv")
+    return df
+
+df = load_data()
+
 
 
 
