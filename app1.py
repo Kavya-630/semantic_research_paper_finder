@@ -28,20 +28,28 @@ def main():
     st.title("📚 Semantic Research Paper Finder")
 
     df = load_data()
+    st.write("Columns in dataset:", df.columns.tolist())  # 👈 debug
 
     query = st.text_input("🔎 Enter your search query")
     if query:
         results = search_papers(df, query)
         st.write(f"Found {len(results)} matching papers:")
-        st.dataframe(results[['title', 'authors', 'year']])
+
+        # Show only existing columns
+        cols_to_show = [c for c in ['title', 'authors', 'year'] if c in results.columns]
+        st.dataframe(results[cols_to_show])
 
         for _, row in results.iterrows():
-            with st.expander(row['title']):
-                st.write(f"**Authors:** {row['authors']}")
-                st.write(f"**Year:** {row['year']}")
-                st.write(f"**Abstract:** {row['abstract']}")
+            with st.expander(row.get('title', 'No Title')):
+                if 'authors' in row:
+                    st.write(f"**Authors:** {row['authors']}")
+                if 'year' in row:
+                    st.write(f"**Year:** {row['year']}")
+                if 'abstract' in row:
+                    st.write(f"**Abstract:** {row['abstract']}")
                 if 'url' in row:
                     st.markdown(f"[Read Paper]({row['url']})")
+
 
 if __name__ == "__main__":
     main()
