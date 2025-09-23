@@ -49,39 +49,43 @@ def build_index(df, model):
 # -----------------------------
 # Streamlit UI
 # -----------------------------
-st.set_page_config(page_title="Semantic Research Paper Finder", layout="wide")
+def main():
+    st.set_page_config(page_title="Semantic Research Paper Finder", layout="wide")
 
-st.title("📚 Semantic Research Paper Finder")
-st.markdown("Search and explore academic papers by semantic meaning, not just keywords.")
+    st.title("📚 Semantic Research Paper Finder")
+    st.markdown("Search and explore academic papers by semantic meaning, not just keywords.")
 
-# Sidebar Filters
-st.sidebar.header("🔎 Filters")
-max_results = st.sidebar.slider("Number of results", 5, 50, 10)
-selected_year = st.sidebar.text_input("Filter by year (e.g., 2022)", "")
+    # Sidebar Filters
+    st.sidebar.header("🔎 Filters")
+    max_results = st.sidebar.slider("Number of results", 5, 50, 10)
+    selected_year = st.sidebar.text_input("Filter by year (e.g., 2022)", "")
 
-# Load resources
-model = load_model()
-df = load_papers("arxiv-metadata-oai.json")
-index, embeddings = build_index(df, model)
+    # Load resources
+    model = load_model()
+    df = load_papers("arxiv-metadata-oai.json")
+    index, embeddings = build_index(df, model)
 
-# Search box
-query = st.text_input("Enter your research topic or query:")
-search_button = st.button("Search")
+    # Search box
+    query = st.text_input("Enter your research topic or query:")
+    search_button = st.button("Search")
 
-if search_button and query:
-    query_embedding = model.encode([query], convert_to_tensor=False)
-    D, I = index.search(query_embedding.astype("float32"), max_results)
+    if search_button and query:
+        query_embedding = model.encode([query], convert_to_tensor=False)
+        D, I = index.search(query_embedding.astype("float32"), max_results)
 
-    results = df.iloc[I[0]].copy()
-    results["score"] = 1 - D[0] / 2  # similarity score
+        results = df.iloc[I[0]].copy()
+        results["score"] = 1 - D[0] / 2
 
-    # Apply year filter
-    if selected_year:
-        results = results[results["year"] == selected_year]
+        # Apply year filter
+        if selected_year:
+            results = results[results["year"] == selected_year]
 
-    st.subheader(f"Top {len(results)} Results for: *{query}*")
-    for _, row in results.iterrows():
-        with st.expander(f"📄 {row['title']} ({row['year']})"):
-            st.write(f"**Categories:** {row['categories']}")
-            st.write(f"**Abstract:** {row['abstract']}")
-            st.progress(float(row["score"]))
+        st.subheader(f"Top {len(results)} Results for: *{query}*")
+        for _, row in results.iterrows():
+            with st.expander(f"📄 {row['title']} ({row['year']})"):
+                st.write(f"**Categories:** {row['categories']}")
+                st.write(f"**Abstract:** {row['abstract']}")
+                st.progress(float(row["score"]))
+
+if __name__ == "__main__":
+    main()
