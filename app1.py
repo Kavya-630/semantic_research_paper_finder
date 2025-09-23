@@ -23,7 +23,7 @@ def load_model():
     return SentenceTransformer("all-MiniLM-L6-v2")
 
 @st.cache_data
-def load_papers(json_path="/home/Kavya/Google Drive/MyDrive/arxiv-metadata-oai-snapshot.json", limit=5000):
+def load_papers(json_path="C:\Users\Navya sree\Downloads\arxiv-metadata-oai-snapshot.json", limit=200000):
     papers = []
     with open(json_path, "r") as f:
         for i, line in enumerate(f):
