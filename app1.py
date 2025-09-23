@@ -31,9 +31,19 @@ def main():
     st.write("Columns in dataset:", df.columns.tolist())  # 👈 debug
 
     query = st.text_input("🔎 Enter your search query")
+
     if query:
         results = search_papers(df, query)
         st.write(f"Found {len(results)} matching papers:")
+
+        # 👇 ADD THIS CONTROL (slider to choose number of papers)
+        max_results = st.slider("How many papers to display?", 
+                                min_value=1, 
+                                max_value=min(len(results), 50), 
+                                value=min(10, len(results)))
+
+        # Show only the top N results
+        results = results.head(max_results)
 
         # Show only existing columns
         cols_to_show = [c for c in ['title', 'authors', 'year'] if c in results.columns]
