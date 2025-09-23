@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1mc72zBeLugadl5VWbR7uMZXeBy9SWmiq
 """
 
-from google.colab import drive
-drive.mount('/content/drive')
 
 # app.py
 import streamlit as st
