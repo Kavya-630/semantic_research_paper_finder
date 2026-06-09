@@ -28,3 +28,7 @@ A small sample dataset is included for quick testing.
 ## Example usage in Streamlit 
 
 https://semanticresearchpaperfinder-gptrbdav79omsyshc6p7im.streamlit.app/
+
+## 📝 Note
+
+For security and deployment reasons, the source code is not directly visible in the deployed Streamlit application. However, the full project source code is available through the repository and can be accessed by downloading or cloning the project locally.
